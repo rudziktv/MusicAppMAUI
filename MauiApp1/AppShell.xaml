@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="MauiApp1.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:MauiApp1"
+    xmlns:view="clr-namespace:MauiApp1.Views"
+    Shell.FlyoutBehavior="Disabled"
+    Shell.NavBarIsVisible="False"
+    Shell.BackgroundColor="#121212"
+    Shell.TabBarBackgroundColor="#232323"
+    Shell.TabBarForegroundColor="White"
+    Shell.TabBarTitleColor="White"
+    Shell.TabBarUnselectedColor="{StaticResource Gray300}">
+
+    <!--<ShellContent
+        Title="Home"
+        ContentTemplate="{DataTemplate local:MainPage}"
+        Route="MainPage" />-->
+
+    <TabBar>
+        <Tab Title="Home" Icon="home_line.png">
+            <ShellContent Title="Home" ContentTemplate="{DataTemplate view:HomePage}" Route="HomePage"/>
+        </Tab>
+        <Tab Title="Downloads" Icon="download_2_line.png">
+            <ShellContent ContentTemplate="{DataTemplate view:DownloadsPage}" Route="DownloadPage"/>
+        </Tab>
+        <Tab Title="Library" Icon="playlist_line.png">
+            <ShellContent ContentTemplate="{DataTemplate view:LibraryPage}" Route="LibraryPage"/>
+        </Tab>
+    </TabBar>
+
+</Shell>

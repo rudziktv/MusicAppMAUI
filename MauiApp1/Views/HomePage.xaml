@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:MauiApp1.ViewModels"
+             x:Class="MauiApp1.Views.HomePage"
+             Title="HomePage"
+             BackgroundColor="{StaticResource bg00dp}">
+    <ContentPage.BindingContext>
+        <vm:HomeViewModel/>
+    </ContentPage.BindingContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <StackLayout Orientation="Horizontal"
+                     BackgroundColor="{StaticResource bg01dp}">
+            <Image Source="rhythm_line.png"
+                   HeightRequest="36"
+                   WidthRequest="36"
+                   Margin="5"/>
+            <Label Text="MusicApp"
+                   VerticalOptions="CenterAndExpand"
+                   FontAttributes="Bold"
+                   FontSize="Subtitle"/>
+            <HorizontalStackLayout HorizontalOptions="EndAndExpand"
+                                   Spacing="10"
+                                   Margin="5">
+                <ImageButton Source="search_line.png"
+                             HeightRequest="36"
+                             WidthRequest="36"
+                             BackgroundColor="Transparent"/>
+                <ImageButton Source="account_circle_line.png"
+                             HeightRequest="36"
+                             WidthRequest="36"
+                             BackgroundColor="Transparent"/>
+            </HorizontalStackLayout>
+            
+        </StackLayout>
+        <VerticalStackLayout Grid.Row="1">
+
+            <Label 
+                Text="Welcome to .NET MAUI! HomePage"
+                VerticalOptions="Center" 
+                HorizontalOptions="Center" />
+        </VerticalStackLayout>
+
+        <Grid Grid.Row="2"
+              Padding="10"
+              BackgroundColor="{StaticResource bg01dp}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <VerticalStackLayout>
+                <Label Text="SongTitle"
+                       FontAttributes="Bold"
+                       HorizontalOptions="CenterAndExpand"
+                       FontSize="Subtitle"/>
+                <Label Text="Author"
+                       HorizontalOptions="CenterAndExpand"
+                       TextColor="Gray"/>
+            </VerticalStackLayout>
+            <HorizontalStackLayout Grid.Column="1"
+                                   Spacing="20"
+                                   HorizontalOptions="EndAndExpand">
+                <ImageButton Source="download_cloud_2_line.png"
+                             WidthRequest="30"
+                             HeightRequest="30"/>
+                <ImageButton Source="pause_line.png"
+                             WidthRequest="36"
+                             HeightRequest="36"/>
+                <ImageButton Source="skip_forward_line.png"
+                             WidthRequest="36"
+                             HeightRequest="36"/>
+            </HorizontalStackLayout>
+            
+        </Grid>
+    </Grid>
+</ContentPage>
