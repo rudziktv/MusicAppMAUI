@@ -30,4 +30,5 @@
         </Tab>
     </TabBar>
 
+    <ShellContent ContentTemplate="{DataTemplate view:PlayerPage}" Route="PlayerPage"/>
 </Shell>

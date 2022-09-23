@@ -14,6 +14,7 @@ namespace MauiApp1.Model
         public string SongTitle { get; set; }
         public string SongAuthor { get; set; }
         public string LocalPath { get; set; }
+        public string VideoID { get; set; }
 
         private string _iconPath;
 
@@ -30,12 +31,13 @@ namespace MauiApp1.Model
 
 
 
-        public DownloadElement(string href, string songTitle, string songAuthor, string localPath)
+        public DownloadElement(string href, string songTitle, string songAuthor, string localPath, string videoID)
         {
             Href = href;
             SongTitle = songTitle;
             SongAuthor = songAuthor;
             LocalPath = localPath;
+            VideoID = videoID;
             IconPath = "download_cloud_2_line.png";
         }
     }

@@ -54,11 +54,13 @@
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
             <VerticalStackLayout>
-                <Label Text="SongTitle"
+                <Label Text="{Binding TrackTitle}"
                        FontAttributes="Bold"
                        HorizontalOptions="CenterAndExpand"
-                       FontSize="Subtitle"/>
-                <Label Text="Author"
+                       FontSize="Subtitle"
+                       MaximumWidthRequest="200"
+                       LineBreakMode="TailTruncation"/>
+                <Label Text="{Binding TrackAuthor}"
                        HorizontalOptions="CenterAndExpand"
                        TextColor="Gray"/>
             </VerticalStackLayout>
@@ -68,14 +70,17 @@
                 <ImageButton Source="download_cloud_2_line.png"
                              WidthRequest="30"
                              HeightRequest="30"/>
-                <ImageButton Source="pause_line.png"
+                <ImageButton Source="{Binding PlayIconPath}"
                              WidthRequest="36"
-                             HeightRequest="36"/>
+                             HeightRequest="36"
+                             Command="{Binding PlayPauseCommand}"/>
                 <ImageButton Source="skip_forward_line.png"
                              WidthRequest="36"
                              HeightRequest="36"/>
             </HorizontalStackLayout>
-            
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding OpenPlayerCommand}"/>
+            </Grid.GestureRecognizers>
         </Grid>
     </Grid>
 </ContentPage>

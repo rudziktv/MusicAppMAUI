@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MauiApp1.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,11 +10,97 @@ namespace MauiApp1.ViewModels
 {
     internal class HomeViewModel : BaseViewModel
     {
-        public ICommand OpenPlayerCommand { get; set; }
+        private string _trackTitle;
+
+        public string TrackTitle
+        {
+            get { return _trackTitle; }
+            set
+            { 
+                _trackTitle = value;
+                OnPropertyChanged(nameof(TrackTitle));
+            }
+        }
+
+        private string _trackAuthor;
+
+        public string TrackAuthor
+        {
+            get { return _trackAuthor; }
+            set
+            { 
+                _trackAuthor = value;
+                OnPropertyChanged(nameof(TrackAuthor));
+            }
+        }
+
+        private string _playIconPath;
+
+        public string PlayIconPath
+        {
+            get { return _playIconPath; }
+            set
+            { 
+                _playIconPath = value;
+                OnPropertyChanged(nameof(PlayIconPath));
+            }
+        }
+
+
+        private Thread playerUpdate;
+
+
+
+        public Command OpenPlayerCommand { get; set; }
+        public Command PlayPauseCommand { get; set; }
 
         public HomeViewModel()
         {
+            //File.Delete(GlobalData.LocalDatabasePath);
 
+            OpenPlayerCommand = new(OpenPlayer);
+            PlayPauseCommand = new(PlayPause);
+
+            playerUpdate = new(PlayerUpdate);
+            playerUpdate.Start();
+        }
+
+        private void OpenPlayer()
+        {
+            Shell.Current.GoToAsync("//PlayerPage", true);
+        }
+
+        private void PlayerUpdate()
+        {
+            GlobalData.GlobalPlayer.Dispatcher.StartTimer(TimeSpan.FromMilliseconds(500), () =>
+            {
+                TrackTitle = GlobalData.GlobalPlayer.CurrentTitle;
+                TrackAuthor = GlobalData.GlobalPlayer.CurrentAuthor;
+
+                if (GlobalData.GlobalPlayer.IsPlaying)
+                {
+                    PlayIconPath = "pause_line.png";
+                }
+                else
+                {
+                    PlayIconPath = "play_line.png";
+                }
+                return true;
+            });
+        }
+
+        private void PlayPause()
+        {
+            GlobalData.GlobalPlayer.PlayPause();
+
+            if (GlobalData.GlobalPlayer.IsPlaying)
+            {
+                PlayIconPath = "pause_line.png";
+            }
+            else
+            {
+                PlayIconPath = "play_line.png";
+            }
         }
     }
 }

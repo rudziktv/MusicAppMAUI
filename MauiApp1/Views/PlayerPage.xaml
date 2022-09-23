@@ -1,27 +1,82 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vw="clr-namespace:MauiApp1.ViewModels"
              x:Class="MauiApp1.Views.PlayerPage"
              Title="PlayerPage"
              BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource bg00dp}}">
+    <ContentPage.BindingContext>
+        <vw:PlayerViewModel/>
+    </ContentPage.BindingContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <VerticalStackLayout>
-            <HorizontalStackLayout>
-                <ImageButton Source="search_line.png"/>
-                <ImageButton Source="search_line.png"/>
+        <StackLayout Orientation="Horizontal"
+                     BackgroundColor="{StaticResource bg01dp}">
+            <ImageButton Source="arrow_down_s_line.png"
+                         HeightRequest="36"
+                         WidthRequest="36"
+                         Margin="5"
+                         Command="{Binding GoBackCommand}"/>
+            <Label Text="MusicApp"
+                   VerticalOptions="CenterAndExpand"
+                   FontAttributes="Bold"
+                   FontSize="Subtitle"/>
+            <HorizontalStackLayout HorizontalOptions="EndAndExpand"
+                                   Spacing="10"
+                                   Margin="5">
+                <ImageButton Source="search_line.png"
+                             HeightRequest="36"
+                             WidthRequest="36"
+                             BackgroundColor="Transparent"/>
+                <ImageButton Source="account_circle_line.png"
+                             HeightRequest="36"
+                             WidthRequest="36"
+                             BackgroundColor="Transparent"/>
             </HorizontalStackLayout>
-        </VerticalStackLayout>
-        <VerticalStackLayout Grid.Row="1">
 
-            <Label 
-            Text="Welcome to .NET MAUI! PlayerPage"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+        </StackLayout>
+        <VerticalStackLayout Grid.Row="1"
+                             HorizontalOptions="CenterAndExpand"
+                             Spacing="15">
+            <Image Source="{Binding ThumbSource}"
+                   HeightRequest="350"
+                   WidthRequest="350"/>
+            <Label Text="{Binding TrackTitle}"
+                   FontSize="Title"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   HorizontalTextAlignment="Center"/>
+            <Label Text="{Binding TrackAuthor}"
+                   TextColor="{StaticResource Gray500}"
+                   FontSize="Subtitle"
+                   HorizontalOptions="CenterAndExpand"/>
+            <Slider Value="{Binding CurrentProgress}"
+                    WidthRequest="350"
+                    DragCompletedCommand="{Binding SeekToCommand}"/>
+            <HorizontalStackLayout HorizontalOptions="CenterAndExpand"
+                                   Spacing="15">
+                <ImageButton Source="skip_back_line.png"
+                             WidthRequest="48"
+                             HeightRequest="48"/>
+                <ImageButton Source="{Binding PlayIconPath, Mode=TwoWay}"
+                             WidthRequest="72"
+                             HeightRequest="72"
+                             Command="{Binding PlayPauseCommand}">
+                    <ImageButton.Shadow>
+                        <Shadow Brush="Black"
+                                Offset="20, 20"
+                                Radius="40"
+                                Opacity="0.2"/>
+                    </ImageButton.Shadow>
+                </ImageButton>
+                <ImageButton Source="skip_forward_line.png"
+                             WidthRequest="48"
+                             HeightRequest="48"/>
+            </HorizontalStackLayout>
         </VerticalStackLayout>
     </Grid>
     
