@@ -78,6 +78,9 @@
                              HeightRequest="48"/>
             </HorizontalStackLayout>
         </VerticalStackLayout>
+        <Grid.GestureRecognizers>
+            <SwipeGestureRecognizer Direction="Down" Command="{Binding GoBackCommand}"/>
+        </Grid.GestureRecognizers>
     </Grid>
     
 </ContentPage>

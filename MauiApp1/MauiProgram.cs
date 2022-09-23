@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Maui;
+using Plugin.LocalNotification;
 
 namespace MauiApp1;
 
@@ -8,6 +9,14 @@ public static class MauiProgram
 	{
         var builder = MauiApp.CreateBuilder();
 
+		LocalNotificationCenter.CreateNotificationChannel(
+			new Plugin.LocalNotification.AndroidOption.NotificationChannelRequest
+			{
+				Id = "sample_notify"
+			});
+
+
+
         // Initialise the toolkit
 		builder
 			.UseMauiApp<App>()
@@ -15,6 +24,31 @@ public static class MauiProgram
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+			})
+			.UseLocalNotification(config =>
+			{
+				config.AddCategory(new NotificationCategory(NotificationCategoryType.Status)
+				{
+					ActionList = new HashSet<NotificationAction>(new List<NotificationAction>())
+					{
+						new NotificationAction(100)
+						{
+							Title = "Play/Pause",
+							Android =
+							{
+								LaunchAppWhenTapped = false,
+                            }
+						},
+                        new NotificationAction(101)
+                        {
+                            Title = "Repeat",
+                            Android =
+                            {
+                                LaunchAppWhenTapped = false,
+                            }
+                        }
+                    }
+				});
 			});
         builder.UseMauiApp<App>().UseMauiCommunityToolkit();
 

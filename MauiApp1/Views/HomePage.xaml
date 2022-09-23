@@ -80,6 +80,7 @@
             </HorizontalStackLayout>
             <Grid.GestureRecognizers>
                 <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding OpenPlayerCommand}"/>
+                <SwipeGestureRecognizer Direction="Up" Command="{Binding OpenPlayerCommand}"/>
             </Grid.GestureRecognizers>
         </Grid>
     </Grid>

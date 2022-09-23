@@ -1,5 +1,4 @@
-﻿using Kotlin.Reflect;
-using MauiApp1.LocalDatabase;
+﻿using MauiApp1.LocalDatabase;
 using SQLite;
 using System;
 using System.Collections.Generic;
@@ -142,22 +141,27 @@ namespace MauiApp1.Services
         public async Task<List<Track>> GetDownloadedTracks()
         {
             var allTracks = GetAllTracks();
-            var files = Directory.GetFiles(GlobalData.DownloadMusicStorage);
 
-            foreach (var item in files)
+            if (Directory.Exists(GlobalData.DownloadMusicStorage))
             {
-                try
+                var files = Directory.GetFiles(GlobalData.DownloadMusicStorage);
+
+                foreach (var item in files)
                 {
-                    var videoId = Path.GetFileNameWithoutExtension(item);
-                    var yt = new YoutubeClient();
-                    var vid = await yt.Videos.GetAsync(videoId);
-                    AddTrackToDB(videoId, item, vid.Url, vid.Title, vid.Author.ChannelTitle, true);
-                }
-                catch (YoutubeExplodeException)
-                {
-                    Console.WriteLine("Video doesn't exists.");
+                    try
+                    {
+                        var videoId = Path.GetFileNameWithoutExtension(item);
+                        var yt = new YoutubeClient();
+                        var vid = await yt.Videos.GetAsync(videoId);
+                        AddTrackToDB(videoId, item, vid.Url, vid.Title, vid.Author.ChannelTitle, true);
+                    }
+                    catch (YoutubeExplodeException)
+                    {
+                        Console.WriteLine("Video doesn't exists.");
+                    }
                 }
             }
+            
 
             foreach (var item in allTracks)
             {
