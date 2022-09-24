@@ -49,7 +49,17 @@ namespace MauiApp1.ViewModels
 
         private Thread playerUpdate;
 
+        private string _thumbSource;
 
+        public string ThumbSource
+        {
+            get { return _thumbSource; }
+            set
+            {
+                _thumbSource = value;
+                OnPropertyChanged(nameof(ThumbSource));
+            }
+        }
 
         public Command OpenPlayerCommand { get; set; }
         public Command PlayPauseCommand { get; set; }
@@ -57,6 +67,8 @@ namespace MauiApp1.ViewModels
         public HomeViewModel()
         {
             //File.Delete(GlobalData.LocalDatabasePath);
+
+            GlobalData.HomeViewModel = this;
 
             OpenPlayerCommand = new(OpenPlayer);
             PlayPauseCommand = new(PlayPause);

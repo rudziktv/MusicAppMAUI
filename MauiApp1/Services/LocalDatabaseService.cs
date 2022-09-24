@@ -20,13 +20,14 @@ namespace MauiApp1.Services
             {
                 File.Create(GlobalData.LocalDatabasePath);
                 connection = new(GlobalData.LocalDatabasePath, GlobalData.Flags);
-                BuildDatabase(GlobalData.LocalDatabasePath);
+                BuildDatabase();
             }
         }
 
-        private void BuildDatabase(string conn_str)
+        private void BuildDatabase()
         {
-            var cursor = connection.CreateTable<Track>();
+            connection.CreateTable<Track>();
+            connection.CreateTable<Playlist>();
             connection.Close();
         }
 
@@ -98,7 +99,6 @@ namespace MauiApp1.Services
         public async Task<bool> TrackIsDownloaded(string youtube_id)
         {
             var query = $"SELECT * FROM track WHERE youtube_id='{youtube_id}' AND downloaded=1;";
-            var xd = Select<Track>(query);
             if (Select<Track>(query).Count == 1)
             {
                 return File.Exists(Select<Track>(query)[0].local_path);
@@ -159,6 +159,10 @@ namespace MauiApp1.Services
                     {
                         Console.WriteLine("Video doesn't exists.");
                     }
+                    catch (InvalidCastException)
+                    {
+
+                    }
                 }
             }
             
@@ -179,6 +183,12 @@ namespace MauiApp1.Services
         {
             var query = $"SELECT * FROM track;";
             return Select<Track>(query);
+        }
+
+        public List<Playlist> GetAllPlaylists()
+        {
+            var query = "SELECT * FROM playlist;";
+            return Select<Playlist>(query);
         }
     }
 }

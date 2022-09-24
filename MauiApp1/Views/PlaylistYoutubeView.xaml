@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiApp1.Views.PlaylistYoutubeView">
+    <VerticalStackLayout Spacing="5">
+        <Entry Placeholder="Enter playlist link from YouTube"/>
+        <Border Padding="10"
+                Stroke="#ce6779">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="10"/>
+            </Border.StrokeShape>
+            <HorizontalStackLayout Spacing="10">
+                <Image Source="alert_line_error.png"
+                       HeightRequest="50"
+                       WidthRequest="50"/>
+                <VerticalStackLayout VerticalOptions="CenterAndExpand">
+                    <Label Text="Warning!"
+                           HorizontalOptions="CenterAndExpand"
+                           FontAttributes="Bold"
+                           TextColor="#ce6779"/>
+                    <Label Text="Make sure, your playlist is not PRIVATE!"
+                           TextColor="#ce6779"/>
+                </VerticalStackLayout>
+            </HorizontalStackLayout>
+        </Border>
+        <HorizontalStackLayout Spacing="10"
+                               HorizontalOptions="EndAndExpand">
+            <Button Text="Cancel"/>
+            <Button Text="Accept"/>
+        </HorizontalStackLayout>
+    </VerticalStackLayout>
+</ContentView>

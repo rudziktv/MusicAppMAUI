@@ -8,43 +8,124 @@
     <ContentPage.BindingContext>
         <vm:LibraryViewModel/>
     </ContentPage.BindingContext>
-    <VerticalStackLayout>
-        <Grid Padding="5"
+    <ScrollView>
+        <VerticalStackLayout>
+            <Grid Padding="5"
               BackgroundColor="{StaticResource bg01dp}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="auto"/>
-            </Grid.ColumnDefinitions>
-            <Label 
-                Text="Downloaded"
-                VerticalOptions="Center" 
-                HorizontalOptions="CenterAndExpand"
-                FontSize="Title"
-                FontAttributes="Bold"/>
-            <ImageButton Source="refresh_line.png"
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+
+                <ImageButton Source="refresh_line.png"
                          WidthRequest="36"
                          HeightRequest="36"
                          VerticalOptions="CenterAndExpand"
                          HorizontalOptions="EndAndExpand"
                          Command="{Binding RefreshCommand}"
                          Grid.Column="0"/>
-        </Grid>
-        <ListView ItemsSource="{Binding DownloadedTracks}"
-                  SelectionMode="None">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <Grid>
-                            <Label Text="{Binding title}"/>
-                            <Grid.GestureRecognizers>
-                                <TapGestureRecognizer NumberOfTapsRequired="1"
+            </Grid>
+
+            <VerticalStackLayout>
+                <VerticalStackLayout Padding="5">
+                    <HorizontalStackLayout Spacing="10"
+                                           VerticalOptions="CenterAndExpand">
+                        <Image Source="download_2_line.png"
+                               WidthRequest="36"
+                               HeightRequest="36"
+                               />
+                        <Label Text="Downloaded"
+                               VerticalOptions="Center" 
+                               HorizontalOptions="StartAndExpand"
+                               FontSize="Title"
+                               FontAttributes="Bold"/>
+                        <!--<Label IsVisible="{Binding IsDownloadedVisible}"/>-->
+                    </HorizontalStackLayout>
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding DownloadedVisibleCommand}"/>
+                    </VerticalStackLayout.GestureRecognizers>
+                </VerticalStackLayout>
+                <ListView IsVisible="{Binding IsDownloadedVisible}"
+                          ItemsSource="{Binding DownloadedTracks}"
+                          SelectionMode="None"
+                          Margin="10">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid>
+                                    <HorizontalStackLayout Spacing="10">
+                                        <Image Source="{Binding ThumbSource}"
+                                           WidthRequest="50"
+                                           HeightRequest="50"/>
+                                        <VerticalStackLayout VerticalOptions="CenterAndExpand">
+                                            <Label Text="{Binding title}"
+                                               LineBreakMode="TailTruncation"
+                                               MaximumWidthRequest="300"/>
+                                            <Label Text="{Binding author}"
+                                               TextColor="{StaticResource Gray400}"/>
+                                        </VerticalStackLayout>
+                                    </HorizontalStackLayout>
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer NumberOfTapsRequired="1"
                                                       Command="{Binding Source={RelativeSource AncestorType={x:Type vm:LibraryViewModel}}, Path=PlaySelectedCommand}"
                                                       CommandParameter="{Binding .}"/>
-                            </Grid.GestureRecognizers>
-                        </Grid>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-    </VerticalStackLayout>
+                                    </Grid.GestureRecognizers>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </VerticalStackLayout>
+            <VerticalStackLayout>
+                <Grid Padding="5">
+                    <HorizontalStackLayout Spacing="10"
+                                           VerticalOptions="CenterAndExpand">
+                        <Image Source="playlist_2_line.png"
+                               WidthRequest="36"
+                               HeightRequest="36"/>
+                        <Label Text="Playlists"
+                               FontSize="Title"
+                               FontAttributes="Bold"
+                               VerticalOptions="CenterAndExpand"
+                               HorizontalOptions="StartAndExpand"/>
+                        <!--<Label IsVisible="{Binding IsPlaylistsVisible}"/>-->
+                    </HorizontalStackLayout>
+                    
+                    <ImageButton Source="add_line.png"
+                                 WidthRequest="36"
+                                 HeightRequest="36"
+                                 Command="{Binding AddPlaylistCommand}"
+                                 HorizontalOptions="EndAndExpand"/>
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding PlaylistsVisibleCommand}"/>
+                    </Grid.GestureRecognizers>
+                </Grid>
+                <ListView ItemsSource="{Binding Playlists}"
+                          SelectionMode="None"
+                          Margin="10"
+                          IsVisible="{Binding IsPlaylistsVisible, Mode=TwoWay}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid>
+                                    <HorizontalStackLayout Spacing="10"
+                                                           VerticalOptions="CenterAndExpand">
+                                        <Image Source="rhythm_line.jpg"
+                                               WidthRequest="50"
+                                               HeightRequest="50"/>
+                                        <VerticalStackLayout>
+                                            <Label Text="Playlist Name"/>
+                                        </VerticalStackLayout>
+                                    </HorizontalStackLayout>
+                                    <Grid.GestureRecognizers>
+
+                                    </Grid.GestureRecognizers>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

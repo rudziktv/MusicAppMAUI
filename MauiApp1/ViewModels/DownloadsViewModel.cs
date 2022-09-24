@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using YoutubeExplode;
+using YoutubeExplode.Exceptions;
 
 namespace MauiApp1.ViewModels
 {
@@ -49,28 +50,39 @@ namespace MauiApp1.ViewModels
 
         private async void AddToQueue()
         {
-            var yt = new YoutubeClient();
-            var vInfo = await yt.Videos.GetAsync(HrefInput);
-
-            var local_db = new LocalDatabaseService();
-
-            var track_downloaded = await local_db.TrackIsDownloaded(vInfo.Id);
-
-            if (!track_downloaded)
+            try
             {
-                var name = vInfo.Id + ".mp4";
-                DownloadQueue.Add(new(HrefInput, vInfo.Title, vInfo.Author.ChannelTitle, GlobalData.GetMusicDownloadStorage(name), vInfo.Id));
-                local_db.AddTrackToDB(vInfo.Id,
-                                                  GlobalData.GetMusicDownloadStorage(name),
-                                                  HrefInput,
-                                                  vInfo.Title,
-                                                  vInfo.Author.ChannelTitle);
+                var yt = new YoutubeClient();
+                var vInfo = await yt.Videos.GetAsync(HrefInput);
+
+                var local_db = new LocalDatabaseService();
+
+                var track_downloaded = await local_db.TrackIsDownloaded(vInfo.Id);
+
+                if (!track_downloaded)
+                {
+                    var name = vInfo.Id + ".mp4";
+                    DownloadQueue.Add(new(vInfo.Url, vInfo.Title, vInfo.Author.ChannelTitle, GlobalData.GetMusicDownloadStorage(name), vInfo.Id));
+                    local_db.AddTrackToDB(vInfo.Id,
+                                                      GlobalData.GetMusicDownloadStorage(name),
+                                                      vInfo.Url,
+                                                      vInfo.Title,
+                                                      vInfo.Author.ChannelTitle);
+                }
+                else
+                {
+                    var toast = Toast.Make("File is on device. Download passed.", CommunityToolkit.Maui.Core.ToastDuration.Short);
+                    Thread thread = new(async () => { Looper.Prepare(); await toast.Show(); });
+                    thread.Start();
+                }
             }
-            else
+            catch (YoutubeExplodeException)
             {
-                var toast = Toast.Make("File is on device. Download passed.", CommunityToolkit.Maui.Core.ToastDuration.Short);
-                Thread thread = new(async () => { Looper.Prepare(); await toast.Show(); });
-                thread.Start();
+                await Shell.Current.DisplayAlert("Error", "This video not exist or is not avaible.", "Ok");
+            }
+            catch (ArgumentException)
+            {
+                await Shell.Current.DisplayAlert("Error", "This video not exist or is not avaible.", "Ok");
             }
         }
 
@@ -96,6 +108,7 @@ namespace MauiApp1.ViewModels
                 {
                     var local_db = new LocalDatabaseService();
                     YoutubeDownloader yt_dw = new();
+                    DownloadService.DownloadThumbnail(item.VideoID);
                     yt_dw.Download(item.Href, item.LocalPath);
                     item.IconPath = "download_cloud_2_fill.png";
                     var toastText = $"Downloaded {item.SongTitle}";

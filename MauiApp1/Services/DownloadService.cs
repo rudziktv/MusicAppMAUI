@@ -33,8 +33,12 @@ namespace MauiApp1.Services
             var path = Path.Combine(GlobalData.InternalStorageAndroid, "thumbs", $"{video_id}.jpg");
 
             Thread download = new(async () => {
-                var bytes = await web.GetByteArrayAsync(href);
-                File.WriteAllBytes(path, bytes);
+                if (!File.Exists(path))
+                {
+                    var bytes = await web.GetByteArrayAsync(href);
+                    File.WriteAllBytes(path, bytes);
+                }
+                GlobalData.HomeViewModel.ThumbSource = path;
                 if (GlobalData.PlayerViewModel != null)
                 {
                     GlobalData.PlayerViewModel.ThumbSource = path;

@@ -50,21 +50,26 @@
               Padding="10"
               BackgroundColor="{StaticResource bg01dp}">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <VerticalStackLayout>
+            <Image Source="{Binding ThumbSource}"
+                   WidthRequest="50"
+                   HeightRequest="50"/>
+            <VerticalStackLayout Grid.Column="1"
+                                 VerticalOptions="CenterAndExpand">
                 <Label Text="{Binding TrackTitle}"
                        FontAttributes="Bold"
                        HorizontalOptions="CenterAndExpand"
                        FontSize="Subtitle"
-                       MaximumWidthRequest="200"
+                       MaximumWidthRequest="150"
                        LineBreakMode="TailTruncation"/>
                 <Label Text="{Binding TrackAuthor}"
                        HorizontalOptions="CenterAndExpand"
                        TextColor="Gray"/>
             </VerticalStackLayout>
-            <HorizontalStackLayout Grid.Column="1"
+            <HorizontalStackLayout Grid.Column="2"
                                    Spacing="20"
                                    HorizontalOptions="EndAndExpand">
                 <ImageButton Source="download_cloud_2_line.png"
