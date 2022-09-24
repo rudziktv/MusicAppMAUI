@@ -134,11 +134,11 @@ namespace MauiApp1.Services
                 CategoryType = NotificationCategoryType.Status,
                 Android =
                 {
+                    Ongoing = true,
                     Priority = Plugin.LocalNotification.AndroidOption.AndroidPriority.Max,
                     LaunchAppWhenTapped = true,
                     AutoCancel = false,
-                    ProgressBarMax = 1000,
-                    ProgressBarProgress = 100,
+                    VisibilityType = Plugin.LocalNotification.AndroidOption.AndroidVisibilityType.Public,
                     ChannelId = "sample_notify"
                 }
             };
