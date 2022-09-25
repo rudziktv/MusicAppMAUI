@@ -28,9 +28,6 @@ namespace MauiApp1.Model
             }
         }
 
-
-
-
         public DownloadElement(string href, string songTitle, string songAuthor, string localPath, string videoID)
         {
             Href = href;

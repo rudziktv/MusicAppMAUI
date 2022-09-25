@@ -9,12 +9,45 @@ namespace MauiApp1.Services
 {
     internal class YoutubeDownloader
     {
-        public void Download(string url, string filePath)
+        public static Task DownloadVideo(string url, string filePath)
         {
-            var source = filePath;
-            var youtube = YouTube.Default;
-            var vid = youtube.GetVideo(url);
-            File.WriteAllBytes(source, vid.GetBytes());
+            return Task.Run(() =>
+            {
+                var source = filePath;
+                var youtube = YouTube.Default;
+                var vid = youtube.GetVideo(url);
+                File.WriteAllBytes(source, vid.GetBytes());
+            });
+        }
+
+        public static Task DownloadThumbnail(string video_id)
+        {
+            return Task.Run(async () =>
+            {
+                var path = Path.Combine(GlobalData.InternalStorageAndroid, "thumbs", $"{video_id}.jpg");
+                var href = $"https://img.youtube.com/vi/{video_id}/0.jpg";
+
+                if (!Directory.Exists(Path.Combine(GlobalData.InternalStorageAndroid, "thumbs")))
+                {
+                    Directory.CreateDirectory(Path.Combine(GlobalData.InternalStorageAndroid, "thumbs"));
+                }
+
+                if (!File.Exists(path))
+                {
+                    var web = new HttpClient();
+                    var bytes = await web.GetByteArrayAsync(href);
+                    File.WriteAllBytes(path, bytes);
+                }
+                GlobalData.HomeViewModel.ThumbSource = path;
+                if (GlobalData.PlayerViewModel != null)
+                {
+                    GlobalData.PlayerViewModel.ThumbSource = path;
+                }
+                else
+                {
+                    GlobalData.LastThumbPath = path;
+                }
+            });
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using MauiApp1.Services;
+﻿using CommunityToolkit.Maui.Views;
+using MauiApp1.Services;
+using MauiApp1.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -103,12 +105,14 @@ namespace MauiApp1.ViewModels
 
 
 		public Command GoBackCommand { get; set; }
+		public Command OpenPlayerContextCommand { get; set; }
 		public Command PlayPauseCommand { get; set; }
 		public Command SeekToCommand { get; set; }
 
 		public PlayerViewModel()
 		{
 			GoBackCommand = new(GoBack);
+			OpenPlayerContextCommand = new(() => Shell.Current.ShowPopup(new PlayerContextMenu()));
 			PlayPauseCommand = new(PlayPause);
 			SeekToCommand = new(SeekTo);
 

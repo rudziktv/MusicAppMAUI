@@ -124,7 +124,7 @@ namespace MauiApp1.Services
             CurrentPath = path;
             player.Prepare();
 
-            var a = DownloadService.DownloadThumbnail(id);
+            DownloadService.DownloadThumbnail(id);
             
             var request = new NotificationRequest
             {

@@ -1,56 +1,83 @@
-﻿using System;
+﻿using Android.OS;
+using CommunityToolkit.Maui.Alerts;
+using MauiApp1.LocalDatabase;
+using MauiApp1.Model;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using static Android.Content.ClipData;
 
 namespace MauiApp1.Services
 {
     internal class DownloadService
     {
-        public static Thread DownloadFromYoutube(string href, string filePath)
+        public List<Track> DownloadQueue { get; set; }
+        public Task CurrentTask { get; set; }
+
+        public DownloadService()
         {
-            var yt_dw = new YoutubeDownloader();
-
-            Thread download = new(() => yt_dw.Download(href, filePath));
-            download.Start();
-
-            return download;
+            DownloadQueue = new();
         }
 
-        public static Thread DownloadThumbnail(string video_id)
+        public Task RunQueue()
         {
-            string href = $"https://img.youtube.com/vi/{video_id}/0.jpg";
-
-            HttpClient web = new();
-
-            if (!Directory.Exists(Path.Combine(GlobalData.InternalStorageAndroid, "thumbs")))
+            CurrentTask = Task.Run(async () =>
             {
-                Directory.CreateDirectory(Path.Combine(GlobalData.InternalStorageAndroid, "thumbs"));
-            }
-
-            var path = Path.Combine(GlobalData.InternalStorageAndroid, "thumbs", $"{video_id}.jpg");
-
-            Thread download = new(async () => {
-                if (!File.Exists(path))
+                foreach (var item in DownloadQueue)
                 {
-                    var bytes = await web.GetByteArrayAsync(href);
-                    File.WriteAllBytes(path, bytes);
+                    await DownloadThumbAndVideo(item);
                 }
-                GlobalData.HomeViewModel.ThumbSource = path;
-                if (GlobalData.PlayerViewModel != null)
+                DownloadQueue.Clear();
+            });
+            return CurrentTask;
+        }
+
+        public Task RunQueue(ObservableCollection<DownloadElement> DownloadQueue)
+        {
+            CurrentTask = Task.Run(async () =>
+            {
+                foreach (var item in DownloadQueue)
                 {
-                    GlobalData.PlayerViewModel.ThumbSource = path;
-                }
-                else
-                {
-                    GlobalData.LastThumbPath = path;
+                    if (item.IconPath != "download_cloud_2_fill.png") await DownloadThumbAndVideo(item);
                 }
             });
-            download.Start();
+            return CurrentTask;
+        }
 
-            return download;
+        public static async void DownloadVideo(string href, string filePath)
+        {
+            await YoutubeDownloader.DownloadVideo(href, filePath);
+        }
+
+        public static async void DownloadThumbnail(string video_id)
+        {
+            await YoutubeDownloader.DownloadThumbnail(video_id);
+        }
+
+        public static Task DownloadThumbAndVideo(Track track)
+        {
+            return Task.Run(async () =>
+            {
+                await YoutubeDownloader.DownloadVideo(track.href, track.local_path);
+                await YoutubeDownloader.DownloadThumbnail(track.youtube_id);
+            });
+        }
+
+        public static Task DownloadThumbAndVideo(DownloadElement track)
+        {
+            return Task.Run(async () =>
+            {
+                await YoutubeDownloader.DownloadVideo(track.Href, track.LocalPath);
+                await YoutubeDownloader.DownloadThumbnail(track.VideoID);
+                track.IconPath = "download_cloud_2_fill.png";
+                var toastText = $"Downloaded {track.SongTitle}";
+                var toast = Toast.Make(toastText, CommunityToolkit.Maui.Core.ToastDuration.Short);
+                new Thread(async () => { Looper.Prepare(); await toast.Show(); }).Start();
+            });
         }
     }
 }

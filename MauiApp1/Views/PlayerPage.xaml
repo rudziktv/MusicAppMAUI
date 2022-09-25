@@ -58,7 +58,10 @@
                     WidthRequest="350"
                     DragCompletedCommand="{Binding SeekToCommand}"/>
             <HorizontalStackLayout HorizontalOptions="CenterAndExpand"
-                                   Spacing="15">
+                                   Spacing="20">
+                <ImageButton Source="download_cloud_2_line.png"
+                             WidthRequest="36"
+                             HeightRequest="36"/>
                 <ImageButton Source="skip_back_line.png"
                              WidthRequest="48"
                              HeightRequest="48"/>
@@ -76,10 +79,14 @@
                 <ImageButton Source="skip_forward_line.png"
                              WidthRequest="48"
                              HeightRequest="48"/>
+                <ImageButton Source="repeat_2_line.png"
+                             WidthRequest="36"
+                             HeightRequest="36"/>
             </HorizontalStackLayout>
         </VerticalStackLayout>
         <Grid.GestureRecognizers>
             <SwipeGestureRecognizer Direction="Down" Command="{Binding GoBackCommand}"/>
+            <SwipeGestureRecognizer Direction="Up" Command="{Binding OpenPlayerContextCommand}"/>
         </Grid.GestureRecognizers>
     </Grid>
     

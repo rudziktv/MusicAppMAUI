@@ -10,6 +10,7 @@
         <vm:AddPlaylistViewModel/>
     </toolkit:Popup.BindingContext>
     <VerticalStackLayout Padding="20">
+        
         <Label 
             Text="Add playlist"
             FontAttributes="Bold"
@@ -21,7 +22,8 @@
                    VerticalOptions="CenterAndExpand"
                    HorizontalOptions="StartAndExpand"/>
             <Switch VerticalOptions="CenterAndExpand"
-                    HorizontalOptions="EndAndExpand"/>
+                    HorizontalOptions="EndAndExpand"
+                    IsToggled="{Binding IsBusy}"/>
         </Grid>
         <ContentView>
             <ContentView.Content>

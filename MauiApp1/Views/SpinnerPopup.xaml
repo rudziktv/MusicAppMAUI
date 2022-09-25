@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="MauiApp1.Views.SpinnerPopup"
+               CanBeDismissedByTappingOutsideOfPopup="False"
+               Color="{StaticResource bg00dp}">
+    <VerticalStackLayout Padding="25"
+                         Spacing="10">
+        <ActivityIndicator Color="White"
+                           IsRunning="True"/>
+        <Label Text="Loading content..."
+               VerticalOptions="Center" 
+               HorizontalOptions="Center"/>
+    </VerticalStackLayout>
+</toolkit:Popup>

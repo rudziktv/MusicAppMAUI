@@ -61,11 +61,14 @@ namespace MauiApp1.ViewModels
             FillDownloadedTracks();
             GetPlaylists();
             RefreshCommand = new(FillDownloadedTracks);
-            PlaySelectedCommand = new((DownloadedTrack track) => GlobalData.GlobalPlayer.ChangeSource(track.local_path, track.title, track.author, track.youtube_id));
+            PlaySelectedCommand = new((DownloadedTrack track) => {
+                GlobalData.GlobalPlayer.ChangeSource(track.local_path, track.title, track.author, track.youtube_id);
+            });
             
             AddPlaylistCommand = new(() =>
             {
-                GlobalData.LibraryPage.ShowPopupPl();
+                GlobalData.PlaylistPopup = new AddPlaylistPage();
+                Shell.Current.CurrentPage.ShowPopup(GlobalData.PlaylistPopup);
             });
 
             Playlists ??= new();
@@ -77,6 +80,8 @@ namespace MauiApp1.ViewModels
 
         private async void FillDownloadedTracks()
         {
+            var popup = new SpinnerPopup();
+            Shell.Current.ShowPopup(popup);
             DownloadedTracks ??= new();
 
             DownloadedTracks.Clear();
@@ -88,6 +93,7 @@ namespace MauiApp1.ViewModels
             {
                 DownloadedTracks.Add(new DownloadedTrack(item));
             }
+            popup.Close();
         }
 
         private void GetPlaylists()

@@ -62,12 +62,16 @@ namespace MauiApp1.ViewModels
                 if (!track_downloaded)
                 {
                     var name = vInfo.Id + ".mp4";
-                    DownloadQueue.Add(new(vInfo.Url, vInfo.Title, vInfo.Author.ChannelTitle, GlobalData.GetMusicDownloadStorage(name), vInfo.Id));
+                    DownloadQueue.Add(new(vInfo.Url,
+                                          vInfo.Title,
+                                          vInfo.Author.ChannelTitle,
+                                          GlobalData.GetMusicDownloadStorage(name),
+                                          vInfo.Id));
                     local_db.AddTrackToDB(vInfo.Id,
-                                                      GlobalData.GetMusicDownloadStorage(name),
-                                                      vInfo.Url,
-                                                      vInfo.Title,
-                                                      vInfo.Author.ChannelTitle);
+                                          GlobalData.GetMusicDownloadStorage(name),
+                                          vInfo.Url,
+                                          vInfo.Title,
+                                          vInfo.Author.ChannelTitle);
                 }
                 else
                 {
@@ -98,18 +102,20 @@ namespace MauiApp1.ViewModels
             downloadT.Start();
         }
 
-        private void Download()
+        private async void Download()
         {
-            Looper.Prepare();
-
+            /*
             foreach (var item in DownloadQueue)
             {
                 if (item.IconPath != "download_cloud_2_fill.png")
                 {
                     var local_db = new LocalDatabaseService();
+                    
+                    /*
                     YoutubeDownloader yt_dw = new();
                     DownloadService.DownloadThumbnail(item.VideoID);
                     yt_dw.Download(item.Href, item.LocalPath);
+                    
                     item.IconPath = "download_cloud_2_fill.png";
                     var toastText = $"Downloaded {item.SongTitle}";
                     var a = local_db.UpdateDownloadedTrackInDB(item.VideoID);
@@ -124,6 +130,9 @@ namespace MauiApp1.ViewModels
                     thread.Start();
                 }
             }
+            */
+
+            await GlobalData.GlobalDownloadService.RunQueue(DownloadQueue);
             IsNotDownloading = true;
         }
     }

@@ -9,7 +9,8 @@
         <vm:LibraryViewModel/>
     </ContentPage.BindingContext>
     <ScrollView>
-        <VerticalStackLayout>
+
+        <VerticalStackLayout Spacing="10">
             <Grid Padding="5"
               BackgroundColor="{StaticResource bg01dp}">
                 <Grid.ColumnDefinitions>
@@ -39,7 +40,7 @@
                                HorizontalOptions="StartAndExpand"
                                FontSize="Title"
                                FontAttributes="Bold"/>
-                        <!--<Label IsVisible="{Binding IsDownloadedVisible}"/>-->
+                        <Label IsVisible="{Binding IsDownloadedVisible}"/>
                     </HorizontalStackLayout>
                     <VerticalStackLayout.GestureRecognizers>
                         <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding DownloadedVisibleCommand}"/>
@@ -88,7 +89,7 @@
                                FontAttributes="Bold"
                                VerticalOptions="CenterAndExpand"
                                HorizontalOptions="StartAndExpand"/>
-                        <!--<Label IsVisible="{Binding IsPlaylistsVisible}"/>-->
+                        <Label IsVisible="{Binding IsPlaylistsVisible}"/>
                     </HorizontalStackLayout>
                     
                     <ImageButton Source="add_line.png"
@@ -118,7 +119,7 @@
                                         </VerticalStackLayout>
                                     </HorizontalStackLayout>
                                     <Grid.GestureRecognizers>
-
+                                        
                                     </Grid.GestureRecognizers>
                                 </Grid>
                             </ViewCell>

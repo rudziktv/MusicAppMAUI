@@ -10,10 +10,13 @@ namespace MauiApp1.Services
 {
     internal static class GlobalData
     {
+        public static DownloadService GlobalDownloadService { get; set; } = new();
         public static PlayerService GlobalPlayer { get; set; } = new();
         public static PlayerViewModel PlayerViewModel { get; set; }
         public static HomeViewModel HomeViewModel { get; set; }
-        public static LibraryPage LibraryPage { get; set; }
+        public static AddPlaylistPage PlaylistPopup { get; set; }
+        public static PlayerContextMenu PlayerContext { get; set; }
+
 
         public static string InternalStorageAndroid { get; set; } = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
 

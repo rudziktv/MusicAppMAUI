@@ -105,14 +105,14 @@ namespace MauiApp1.Services
             }
             else if (Select<Track>(query).Count == 0 && File.Exists(GlobalData.GetMusicDownloadStorage(youtube_id + ".mp4")))
             {
-                var yt = new YoutubeClient();
-                var vid = await yt.Videos.GetAsync(youtube_id);
                 if (TrackExistsInDB(youtube_id))
                 {
                     UpdateDownloadedTrackInDB(youtube_id);
                 }
                 else
                 {
+                    var yt = new YoutubeClient();
+                    var vid = await yt.Videos.GetAsync(youtube_id);
                     AddTrackToDB(youtube_id, GlobalData.GetMusicDownloadStorage(youtube_id + ".mp4"), vid.Url, vid.Title, vid.Author.ChannelTitle, true);
                 }
                 return true;
@@ -151,9 +151,12 @@ namespace MauiApp1.Services
                     try
                     {
                         var videoId = Path.GetFileNameWithoutExtension(item);
-                        var yt = new YoutubeClient();
-                        var vid = await yt.Videos.GetAsync(videoId);
-                        AddTrackToDB(videoId, item, vid.Url, vid.Title, vid.Author.ChannelTitle, true);
+                        if (!await TrackIsDownloaded(videoId))
+                        {
+                            var yt = new YoutubeClient();
+                            var vid = await yt.Videos.GetAsync(videoId);
+                            AddTrackToDB(videoId, item, vid.Url, vid.Title, vid.Author.ChannelTitle, true);
+                        }
                     }
                     catch (YoutubeExplodeException)
                     {
