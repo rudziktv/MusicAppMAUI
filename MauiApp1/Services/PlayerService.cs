@@ -1,5 +1,13 @@
-﻿using Android.Graphics.Drawables;
+﻿using Android.App;
+using Android.Content;
+using Android.Graphics.Drawables;
 using Android.Media;
+using Android.Media.Session;
+using Android.Service.Media;
+using Android.Support.V4.Media.Session;
+using AndroidX.Media.Session;
+using MauiApp1.Listeners;
+using MauiApp1.Model;
 using Plugin.LocalNotification;
 using Plugin.LocalNotification.EventArgs;
 using System;
@@ -14,9 +22,13 @@ namespace MauiApp1.Services
     internal class PlayerService : BindableObject
     {
         private MediaPlayer player;
+        private MediaSession session;
+        private AudioManager am;
+        private MediaSessionCompat sessionCompat;
 
         public string CurrentTitle { get; private set; }
         public string CurrentAuthor { get; private set; }
+        public List<DownloadedTrack> Queue { get; set; }
 
         /// <summary>
         /// Current position on timeline in percents (0.00-1.00).
@@ -57,6 +69,31 @@ namespace MauiApp1.Services
         {
             player = new();
 
+            player.SetOnCompletionListener(new CompletionListener());
+
+            session = new(MauiProgram.context, "MediaSession");
+
+            if (Android.OS.Build.VERSION.SdkInt < Android.OS.BuildVersionCodes.S)
+            {
+                
+
+                //am = (AudioManager)MauiProgram.context.GetSystemService(Context.AudioService);
+                var component = new ComponentName(MauiProgram.context, new MediaButtonsBroadcastReceiver().ComponentName);
+
+                
+
+                //sessionCompat = new(MauiProgram.context, "sessionCompat", component, null);
+                //sessionCompat.Active = true;
+
+                session.Active = true;
+
+                //am.RegisterMediaButtonEventReceiver(component);
+            }
+            else
+            {
+                var component = new ComponentName(MauiProgram.context, new MediaButtonsBroadcastReceiver().ComponentName);
+                session.SetMediaButtonBroadcastReceiver(component);
+            }
             LocalNotificationCenter.Current.NotificationActionTapped += Current_NotificationTapped;
         }
         

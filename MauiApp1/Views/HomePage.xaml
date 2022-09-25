@@ -4,7 +4,7 @@
              xmlns:vm="clr-namespace:MauiApp1.ViewModels"
              x:Class="MauiApp1.Views.HomePage"
              Title="HomePage"
-             BackgroundColor="{StaticResource bg00dp}">
+             BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource bg00dp}}">
     <ContentPage.BindingContext>
         <vm:HomeViewModel/>
     </ContentPage.BindingContext>
@@ -15,26 +15,28 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <StackLayout Orientation="Horizontal"
-                     BackgroundColor="{StaticResource bg01dp}">
-            <Image Source="rhythm_line.png"
+                     BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource bg01dp}}">
+            <Image Source="icon_without_text.png"
                    HeightRequest="36"
                    WidthRequest="36"
                    Margin="5"/>
-            <Label Text="MusicApp"
+            <Label Text="Mmino"
                    VerticalOptions="CenterAndExpand"
                    FontAttributes="Bold"
-                   FontSize="Subtitle"/>
+                   FontSize="Title"
+                   FontFamily="RubikExtraBold"/>
             <HorizontalStackLayout HorizontalOptions="EndAndExpand"
                                    Spacing="10"
                                    Margin="5">
-                <ImageButton Source="search_line.png"
+                <ImageButton Source="{AppThemeBinding Light=search_line_black.png, Dark=search_line.png}"
                              HeightRequest="36"
                              WidthRequest="36"
                              BackgroundColor="Transparent"/>
-                <ImageButton Source="account_circle_line.png"
+                <ImageButton Source="{AppThemeBinding Light=account_circle_line_black.png, Dark=account_circle_line.png}"
                              HeightRequest="36"
                              WidthRequest="36"
-                             BackgroundColor="Transparent"/>
+                             BackgroundColor="Transparent"
+                             Command="{Binding GoToSideCommand}"/>
             </HorizontalStackLayout>
             
         </StackLayout>
@@ -48,7 +50,7 @@
 
         <Grid Grid.Row="2"
               Padding="10"
-              BackgroundColor="{StaticResource bg01dp}">
+              BackgroundColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource bg01dp}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
@@ -72,14 +74,14 @@
             <HorizontalStackLayout Grid.Column="2"
                                    Spacing="20"
                                    HorizontalOptions="EndAndExpand">
-                <ImageButton Source="download_cloud_2_line.png"
+                <ImageButton Source="{AppThemeBinding Light=download_cloud_2_line_black.png, Dark=download_cloud_2_line.png}"
                              WidthRequest="30"
                              HeightRequest="30"/>
                 <ImageButton Source="{Binding PlayIconPath}"
                              WidthRequest="36"
                              HeightRequest="36"
                              Command="{Binding PlayPauseCommand}"/>
-                <ImageButton Source="skip_forward_line.png"
+                <ImageButton Source="{AppThemeBinding Light=skip_forward_line_black.png, Dark=skip_forward_line.png}"
                              WidthRequest="36"
                              HeightRequest="36"/>
             </HorizontalStackLayout>

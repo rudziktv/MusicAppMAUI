@@ -12,13 +12,13 @@
 
         <VerticalStackLayout Spacing="10">
             <Grid Padding="5"
-              BackgroundColor="{StaticResource bg01dp}">
+              BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource bg01dp}}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
 
-                <ImageButton Source="refresh_line.png"
+                <ImageButton Source="{AppThemeBinding Light=refresh_line_black.png, Dark=refresh_line.png}"
                          WidthRequest="36"
                          HeightRequest="36"
                          VerticalOptions="CenterAndExpand"
@@ -31,7 +31,7 @@
                 <VerticalStackLayout Padding="5">
                     <HorizontalStackLayout Spacing="10"
                                            VerticalOptions="CenterAndExpand">
-                        <Image Source="download_2_line.png"
+                        <Image Source="{AppThemeBinding Light=download_2_line_black.png, Dark=download_2_line.png}"
                                WidthRequest="36"
                                HeightRequest="36"
                                />
@@ -81,7 +81,7 @@
                 <Grid Padding="5">
                     <HorizontalStackLayout Spacing="10"
                                            VerticalOptions="CenterAndExpand">
-                        <Image Source="playlist_2_line.png"
+                        <Image Source="{AppThemeBinding Light=playlist_2_line_black.png, Dark=playlist_2_line.png}"
                                WidthRequest="36"
                                HeightRequest="36"/>
                         <Label Text="Playlists"
@@ -91,8 +91,8 @@
                                HorizontalOptions="StartAndExpand"/>
                         <Label IsVisible="{Binding IsPlaylistsVisible}"/>
                     </HorizontalStackLayout>
-                    
-                    <ImageButton Source="add_line.png"
+
+                    <ImageButton Source="{AppThemeBinding Light=add_line_black.png, Dark=add_line.png}"
                                  WidthRequest="36"
                                  HeightRequest="36"
                                  Command="{Binding AddPlaylistCommand}"
@@ -111,7 +111,7 @@
                                 <Grid>
                                     <HorizontalStackLayout Spacing="10"
                                                            VerticalOptions="CenterAndExpand">
-                                        <Image Source="rhythm_line.jpg"
+                                        <Image Source="{AppThemeBinding Light=rhythm_line_black.jpg, Dark=rhythm_line.jpg}"
                                                WidthRequest="50"
                                                HeightRequest="50"/>
                                         <VerticalStackLayout>

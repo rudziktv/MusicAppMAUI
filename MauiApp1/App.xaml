@@ -9,7 +9,6 @@
             <Style TargetType="ContentPage">
                 <Setter Property="BackgroundColor" Value="#121212"/>
             </Style>
-            
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />

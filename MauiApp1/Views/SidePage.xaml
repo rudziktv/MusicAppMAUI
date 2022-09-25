@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:MauiApp1.ViewModels"
+             x:Class="MauiApp1.Views.SidePage"
+             Title="SidePage"
+             BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource bg00dp}}">
+    <ContentPage.BindingContext>
+        <vm:SideViewModel/>
+    </ContentPage.BindingContext>
+    <VerticalStackLayout>
+        <Grid BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource bg01dp}}"
+              Padding="5" Margin="0, 0, 0, 5">
+            <ImageButton Source="{AppThemeBinding Light=arrow_left_s_line_black.png, Dark=arrow_left_s_line.png}"
+                         WidthRequest="36"
+                         HeightRequest="36"
+                         Command="{Binding GoBackCommand}"
+                         HorizontalOptions="StartAndExpand"
+                         VerticalOptions="CenterAndExpand"/>
+        </Grid>
+        <VerticalStackLayout Spacing="10"
+                             Padding="5, 0">
+            <HorizontalStackLayout Spacing="10">
+                <Image Source="{AppThemeBinding Light=settings_line_black.png, Dark=settings_line.png}"
+                   WidthRequest="36"
+                   HeightRequest="36"/>
+                <Label Text="Settings"
+                   VerticalOptions="CenterAndExpand"/>
+            </HorizontalStackLayout>
+            <Grid>
+                <HorizontalStackLayout VerticalOptions="CenterAndExpand"
+                                       HorizontalOptions="StartAndExpand"
+                                       Spacing="10">
+                    <Image Source="{AppThemeBinding Light=brush_line_black.png, Dark=brush_line.png}"
+                           WidthRequest="36"
+                           HeightRequest="36"/>
+                    <Label Text="Theme"
+                           VerticalOptions="CenterAndExpand"/>
+                </HorizontalStackLayout>
+                <Switch HorizontalOptions="EndAndExpand"
+                        VerticalOptions="CenterAndExpand"
+                        IsToggled="{Binding IsDarkModeEnabled}"/>
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1"/>
+                </Grid.GestureRecognizers>
+            </Grid>
+        </VerticalStackLayout>
+    </VerticalStackLayout>
+</ContentPage>

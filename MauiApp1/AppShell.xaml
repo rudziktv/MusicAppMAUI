@@ -7,17 +7,16 @@
     xmlns:view="clr-namespace:MauiApp1.Views"
     Shell.FlyoutBehavior="Disabled"
     Shell.NavBarIsVisible="False"
-    Shell.BackgroundColor="#121212"
-    Shell.TabBarBackgroundColor="#232323"
-    Shell.TabBarForegroundColor="White"
-    Shell.TabBarTitleColor="White"
-    Shell.TabBarUnselectedColor="{StaticResource Gray300}">
+    Shell.BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource bg00dp}}"
+    Shell.TabBarBackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource bg02dp}}"
+    Shell.TabBarForegroundColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"
+    Shell.TabBarTitleColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"
+    Shell.TabBarUnselectedColor="{AppThemeBinding Light={StaticResource Gray400}, Dark={StaticResource Gray200}}">
 
     <!--<ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />-->
-
     <TabBar>
         <Tab Title="Home" Icon="home_line.png">
             <ShellContent Title="Home" ContentTemplate="{DataTemplate view:HomePage}" Route="HomePage"/>
@@ -31,4 +30,5 @@
     </TabBar>
 
     <ShellContent ContentTemplate="{DataTemplate view:PlayerPage}" Route="PlayerPage"/>
+    <ShellContent ContentTemplate="{DataTemplate view:SidePage}" Route="SidePage"/>
 </Shell>

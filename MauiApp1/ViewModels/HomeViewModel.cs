@@ -63,15 +63,18 @@ namespace MauiApp1.ViewModels
 
         public Command OpenPlayerCommand { get; set; }
         public Command PlayPauseCommand { get; set; }
+        public Command GoToSideCommand { get; set; }
 
         public HomeViewModel()
         {
             //File.Delete(GlobalData.LocalDatabasePath);
+            Application.Current.UserAppTheme = AppTheme.Dark;
 
             GlobalData.HomeViewModel = this;
 
             OpenPlayerCommand = new(OpenPlayer);
             PlayPauseCommand = new(PlayPause);
+            GoToSideCommand = new(() => Shell.Current.GoToAsync("//SidePage"));
 
             playerUpdate = new(PlayerUpdate);
             playerUpdate.Start();
@@ -91,11 +94,11 @@ namespace MauiApp1.ViewModels
 
                 if (GlobalData.GlobalPlayer.IsPlaying)
                 {
-                    PlayIconPath = "pause_line.png";
+                    PlayIconPath = Application.Current.RequestedTheme == AppTheme.Dark ? "pause_line.png" : "pause_line_black.png";
                 }
                 else
                 {
-                    PlayIconPath = "play_line.png";
+                    PlayIconPath = Application.Current.RequestedTheme == AppTheme.Dark ? "play_line.png" : "play_line_black.png";
                 }
                 return true;
             });
@@ -107,11 +110,11 @@ namespace MauiApp1.ViewModels
 
             if (GlobalData.GlobalPlayer.IsPlaying)
             {
-                PlayIconPath = "pause_line.png";
+                PlayIconPath = Application.Current.RequestedTheme == AppTheme.Dark ? "pause_line.png" : "pause_line_black.png";
             }
             else
             {
-                PlayIconPath = "play_line.png";
+                PlayIconPath = Application.Current.RequestedTheme == AppTheme.Dark ? "play_line.png" : "play_line_black.png";
             }
         }
     }

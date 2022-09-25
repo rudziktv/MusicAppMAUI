@@ -86,7 +86,15 @@ namespace MauiApp1.ViewModels
 			{ 
 				_isPlaying = value;
 				OnPropertyChanged(nameof(IsPlaying));
-				PlayButtonIcon = IsPlaying ? "pause_line.png" : "play_line.png";
+                if (IsPlaying)
+                {
+                    PlayIconPath = Application.Current.RequestedTheme == AppTheme.Dark ? "pause_line.png" : "pause_line_black.png"; ;
+
+                }
+                else
+                {
+                    PlayIconPath = Application.Current.RequestedTheme == AppTheme.Dark ? "play_line.png" : "play_line_black.png";
+                }
             }
 		}
 
@@ -112,7 +120,11 @@ namespace MauiApp1.ViewModels
 		public PlayerViewModel()
 		{
 			GoBackCommand = new(GoBack);
-			OpenPlayerContextCommand = new(() => Shell.Current.ShowPopup(new PlayerContextMenu()));
+			OpenPlayerContextCommand = new(() =>
+			{
+				GlobalData.PlayerContext = new PlayerContextMenu();
+                Shell.Current.ShowPopup(GlobalData.PlayerContext);
+            });
 			PlayPauseCommand = new(PlayPause);
 			SeekToCommand = new(SeekTo);
 
@@ -134,12 +146,12 @@ namespace MauiApp1.ViewModels
 			GlobalData.GlobalPlayer.PlayPause();
 			if (GlobalData.GlobalPlayer.IsPlaying)
 			{
-				PlayIconPath = "pause_line.png";
+				PlayIconPath = Application.Current.RequestedTheme == AppTheme.Dark ? "pause_line.png" : "pause_line_black.png"; ;
 
             }
 			else
 			{
-				PlayIconPath = "play_line.png";
+				PlayIconPath = Application.Current.RequestedTheme == AppTheme.Dark ? "play_line.png" : "play_line_black.png"; ;
 
             }
 		}
@@ -152,20 +164,19 @@ namespace MauiApp1.ViewModels
 		private void TimelineUpdate()
 		{
             GlobalData.GlobalPlayer.Dispatcher.StartTimer(TimeSpan.FromMilliseconds(500), () => {
-                PlayIconPath = GlobalData.GlobalPlayer.IsPlaying ? "pause_line.png" : "play_line.png";
                 if (GlobalData.GlobalPlayer.IsPlaying)
                 {
 					TrackTitle = GlobalData.GlobalPlayer.CurrentTitle;
 					TrackAuthor = GlobalData.GlobalPlayer.CurrentAuthor;
                     CurrentProgress = GlobalData.GlobalPlayer.CurrentProgress;
+
+                    PlayIconPath = Application.Current.RequestedTheme == AppTheme.Dark ? "pause_line.png" : "pause_line_black.png";
                 }
-                /*
 				else
 				{
-					CurrentProgress = 0;
-                    IsPlaying = GlobalData.GlobalPlayer.IsPlaying;
+					PlayIconPath = Application.Current.RequestedTheme == AppTheme.Dark ? "play_line.png" : "play_line_black.png";
                 }
-				*/
+
                 return true;
             });
 		}

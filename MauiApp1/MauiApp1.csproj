@@ -27,6 +27,7 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
+		<PackageIcon>output-onlinepngtools.png</PackageIcon>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-android|AnyCPU'">
@@ -65,7 +66,6 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
 
 		<!-- Splash Screen -->
 		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
@@ -82,36 +82,92 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiImage Remove="Resources\Images\icon_big.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Remove="Resources\Fonts\Rubik-ExtraBold.ttf" />
 	  <None Remove="Resources\Images\account_circle_line.png" />
+	  <None Remove="Resources\Images\account_circle_line_black.png" />
 	  <None Remove="Resources\Images\add_circle_line.png" />
+	  <None Remove="Resources\Images\add_circle_line_black.png" />
 	  <None Remove="Resources\Images\add_line.png" />
+	  <None Remove="Resources\Images\add_line_black.png" />
 	  <None Remove="Resources\Images\alert_line.png" />
+	  <None Remove="Resources\Images\alert_line_black.png" />
 	  <None Remove="Resources\Images\alert_line_error.png" />
 	  <None Remove="Resources\Images\arrow_down_s_line.png" />
+	  <None Remove="Resources\Images\arrow_down_s_line_black.png" />
+	  <None Remove="Resources\Images\arrow_go_back_line.png" />
+	  <None Remove="Resources\Images\arrow_go_back_line_black.png" />
+	  <None Remove="Resources\Images\arrow_left_s_line.png" />
+	  <None Remove="Resources\Images\arrow_left_s_line_black.png" />
+	  <None Remove="Resources\Images\brush_line.png" />
+	  <None Remove="Resources\Images\brush_line_black.png" />
 	  <None Remove="Resources\Images\close_line.png" />
+	  <None Remove="Resources\Images\close_line_black.png" />
 	  <None Remove="Resources\Images\download_2_line.png" />
+	  <None Remove="Resources\Images\download_2_line_black.png" />
 	  <None Remove="Resources\Images\download_cloud_2_fill.png" />
+	  <None Remove="Resources\Images\download_cloud_2_fill_black.png" />
 	  <None Remove="Resources\Images\download_cloud_2_line.png" />
+	  <None Remove="Resources\Images\download_cloud_2_line_black.png" />
 	  <None Remove="Resources\Images\download_cloud_fill.png" />
+	  <None Remove="Resources\Images\download_cloud_fill_black.png" />
 	  <None Remove="Resources\Images\download_cloud_line.png" />
+	  <None Remove="Resources\Images\download_cloud_line_black.png" />
 	  <None Remove="Resources\Images\download_line.png" />
+	  <None Remove="Resources\Images\download_line_black.png" />
+	  <None Remove="Resources\Images\error_warning_line_black.png" />
+	  <None Remove="Resources\Images\file_warning_line_black.png" />
+	  <None Remove="Resources\Images\folder_warning_line_black.png" />
 	  <None Remove="Resources\Images\headphone_line.png" />
+	  <None Remove="Resources\Images\headphone_line_black.png" />
+	  <None Remove="Resources\Images\home_fill_black.png" />
 	  <None Remove="Resources\Images\home_line.png" />
+	  <None Remove="Resources\Images\home_line_black.png" />
+	  <None Remove="Resources\Images\icon.png" />
+	  <None Remove="Resources\Images\icon_big.png" />
+	  <None Remove="Resources\Images\icon_without_text.png" />
 	  <None Remove="Resources\Images\order_play_line.png" />
+	  <None Remove="Resources\Images\order_play_line_black.png" />
 	  <None Remove="Resources\Images\pause_line.png" />
+	  <None Remove="Resources\Images\pause_line_black.png" />
 	  <None Remove="Resources\Images\playlist_2_line.png" />
+	  <None Remove="Resources\Images\playlist_2_line_black.png" />
 	  <None Remove="Resources\Images\playlist_add_line.png" />
+	  <None Remove="Resources\Images\playlist_add_line_black.png" />
 	  <None Remove="Resources\Images\playlist_line.png" />
+	  <None Remove="Resources\Images\playlist_line_black.png" />
 	  <None Remove="Resources\Images\play_line.png" />
+	  <None Remove="Resources\Images\play_line_black.png" />
 	  <None Remove="Resources\Images\refresh_line.png" />
+	  <None Remove="Resources\Images\refresh_line_black.png" />
 	  <None Remove="Resources\Images\repeat_2_line.png" />
+	  <None Remove="Resources\Images\repeat_2_line_black.png" />
 	  <None Remove="Resources\Images\repeat_one_line.png" />
+	  <None Remove="Resources\Images\repeat_one_line_black.png" />
 	  <None Remove="Resources\Images\rhythm_line.png" />
+	  <None Remove="Resources\Images\rhythm_line_black.png" />
 	  <None Remove="Resources\Images\search_line.png" />
+	  <None Remove="Resources\Images\search_line_black.png" />
+	  <None Remove="Resources\Images\settings_line.png" />
+	  <None Remove="Resources\Images\settings_line_black.png" />
 	  <None Remove="Resources\Images\skip_back_line.png" />
+	  <None Remove="Resources\Images\skip_back_line_black.png" />
 	  <None Remove="Resources\Images\skip_forward_line.png" />
+	  <None Remove="Resources\Images\skip_forward_line_black.png" />
+	  <None Remove="Resources\Images\spam_2_line_black.png" />
+	  <None Remove="Resources\Images\spam_3_line_black.png" />
+	  <None Remove="Resources\Images\spam_line_black.png" />
 	  <None Remove="Resources\Images\star_fill.png" />
+	  <None Remove="Resources\Images\star_fill_black.png" />
 	  <None Remove="Resources\Images\star_line.png" />
+	  <None Remove="Resources\Images\star_line_black.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <CodeAnalysisDictionary Include="Resources\Images\icon_big.png" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -150,6 +206,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\PlaylistYoutubeView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\SidePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\SpinnerPopup.xaml">

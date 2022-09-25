@@ -4,7 +4,7 @@
              xmlns:vm="clr-namespace:MauiApp1.ViewModels"
              x:Class="MauiApp1.Views.DownloadsPage"
              Title="DownloadsPage"
-             BackgroundColor="{StaticResource bg00dp}">
+             BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource bg00dp}}">
     <ContentPage.BindingContext>
         <vm:DownloadsViewModel/>
     </ContentPage.BindingContext>
@@ -22,7 +22,7 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <ImageButton Source="download_line.png"
+            <ImageButton Source="{AppThemeBinding Light=download_line_black.png, Dark=download_line.png}"
                          WidthRequest="48"
                          HeightRequest="48"
                          Grid.Column="0"
@@ -30,7 +30,7 @@
                          IsEnabled="{Binding IsNotDownloading}"
                          Command="{Binding DownloadAllCommand}"/>
 
-            <ImageButton Source="add_circle_line.png"
+            <ImageButton Source="{AppThemeBinding Light=add_circle_line_black.png, Dark=add_circle_line.png}"
                          WidthRequest="48"
                          HeightRequest="48"
                          Grid.Column="1"
@@ -60,7 +60,7 @@
                                                  VerticalOptions="CenterAndExpand">
                                 <Label Text="{Binding SongTitle}"/>
                             </VerticalStackLayout>
-                            <ImageButton Source="close_line.png"
+                            <ImageButton Source="{AppThemeBinding Light=close_line_black.png, Dark=close_line.png}"
                                          WidthRequest="36"
                                          HeightRequest="36"
                                          Grid.Column="2"

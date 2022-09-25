@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-	<application android:allowBackup="true" android:icon="@mipmap/appicon" android:roundIcon="@mipmap/appicon_round" android:supportsRtl="true"></application>
+	<application android:allowBackup="true" android:supportsRtl="true"></application>
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
@@ -8,4 +8,9 @@
 	<uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
 	<uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
 	<uses-sdk android:minSdkVersion="25" android:targetSdkVersion="29" />
+	<!--<service android:name=".MediaPlaybackService">
+		<intent-filter>
+			<action android:name="android.media.browse.MediaBrowserService" />
+		</intent-filter>
+	</service>-->
 </manifest>
