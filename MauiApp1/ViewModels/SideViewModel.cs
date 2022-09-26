@@ -16,7 +16,7 @@ namespace MauiApp1.ViewModels
             set
             { 
                 _isDarkModeEnabled = value;
-                OnPropertyChanged(nameof(IsDarkModeEnabled));
+                //OnPropertyChanged(nameof(IsDarkModeEnabled));
                 Application.Current.UserAppTheme = IsDarkModeEnabled ? AppTheme.Dark : AppTheme.Light;
             }
         }
