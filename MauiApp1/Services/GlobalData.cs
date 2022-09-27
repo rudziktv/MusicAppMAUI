@@ -27,11 +27,14 @@ namespace MauiApp1.Services
 
         public const string MusicDownloadFolderName = "Music";
         public const string TempFolderName = "Temps";
+        public const string PlaylistThumbs = "Playlists";
 
         //public static string TempStorage = Path.Combine(InternalStorageAndroid, TempStorage);
 
         public static string DownloadMusicStorage = Path.Combine(InternalStorageAndroid, MusicDownloadFolderName);
         public static string LocalDatabasePath = Path.Combine(InternalStorageAndroid, "metadata.sqlite3");
+        public static string PlaylistThumbsPath = Path.Combine(InternalStorageAndroid, PlaylistThumbs);
+        public static string ThumbsStorage = Path.Combine(InternalStorageAndroid, "thumbs");
         public static string LastThumbPath;
 
         public static string GetMusicDownloadStorage(string fileName)

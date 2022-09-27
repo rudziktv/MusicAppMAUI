@@ -64,7 +64,8 @@
                              HeightRequest="36"/>
                 <ImageButton Source="{AppThemeBinding Light=skip_back_line_black.png, Dark=skip_back_line.png}"
                              WidthRequest="48"
-                             HeightRequest="48"/>
+                             HeightRequest="48"
+                             Command="{Binding PreviousCommand}"/>
                 <ImageButton Source="{Binding PlayIconPath, Mode=TwoWay}"
                              WidthRequest="72"
                              HeightRequest="72"
@@ -78,7 +79,8 @@
                 </ImageButton>
                 <ImageButton Source="{AppThemeBinding Light=skip_forward_line_black.png, Dark=skip_forward_line.png}"
                              WidthRequest="48"
-                             HeightRequest="48"/>
+                             HeightRequest="48"
+                             Command="{Binding NextCommand}"/>
                 <ImageButton Source="{AppThemeBinding Light=repeat_2_line_black.png, Dark=repeat_2_line.png}"
                              WidthRequest="36"
                              HeightRequest="36"/>

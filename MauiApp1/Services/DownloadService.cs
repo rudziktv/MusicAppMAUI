@@ -36,6 +36,19 @@ namespace MauiApp1.Services
             return CurrentTask;
         }
 
+        public Task RunQueue(ObservableCollection<DownloadedTrack> DownloadedTrack)
+        {
+            CurrentTask = Task.Run(async () =>
+            {
+                foreach (var item in DownloadedTrack)
+                {
+                    await DownloadThumbAndVideo(item);
+                }
+                DownloadedTrack.Clear();
+            });
+            return CurrentTask;
+        }
+
         public Task RunQueue(ObservableCollection<DownloadElement> DownloadQueue)
         {
             CurrentTask = Task.Run(async () =>
@@ -48,12 +61,12 @@ namespace MauiApp1.Services
             return CurrentTask;
         }
 
-        public static async void DownloadVideo(string href, string filePath)
+        public static async Task DownloadVideo(string href, string filePath)
         {
             await YoutubeDownloader.DownloadVideo(href, filePath);
         }
 
-        public static async void DownloadThumbnail(string video_id)
+        public static async Task DownloadThumbnail(string video_id)
         {
             await YoutubeDownloader.DownloadThumbnail(video_id);
         }

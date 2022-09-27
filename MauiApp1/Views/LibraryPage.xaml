@@ -8,125 +8,133 @@
     <ContentPage.BindingContext>
         <vm:LibraryViewModel/>
     </ContentPage.BindingContext>
-    <ScrollView>
-
-        <VerticalStackLayout Spacing="10">
-            <Grid Padding="5"
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid Padding="5"
               BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource bg01dp}}">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="auto"/>
-                </Grid.ColumnDefinitions>
-
-                <ImageButton Source="{AppThemeBinding Light=refresh_line_black.png, Dark=refresh_line.png}"
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <ImageButton Source="{AppThemeBinding Light=refresh_line_black.png, Dark=refresh_line.png}"
                          WidthRequest="36"
                          HeightRequest="36"
                          VerticalOptions="CenterAndExpand"
                          HorizontalOptions="EndAndExpand"
                          Command="{Binding RefreshCommand}"
                          Grid.Column="0"/>
-            </Grid>
-
-            <VerticalStackLayout>
-                <VerticalStackLayout Padding="5">
-                    <HorizontalStackLayout Spacing="10"
+        </Grid>
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Spacing="10">
+                <VerticalStackLayout>
+                    <VerticalStackLayout Padding="5">
+                        <HorizontalStackLayout Spacing="10"
                                            VerticalOptions="CenterAndExpand">
-                        <Image Source="{AppThemeBinding Light=download_2_line_black.png, Dark=download_2_line.png}"
+                            <Image Source="{AppThemeBinding Light=download_2_line_black.png, Dark=download_2_line.png}"
                                WidthRequest="36"
                                HeightRequest="36"
                                />
-                        <Label Text="Downloaded"
+                            <Label Text="Downloaded"
                                VerticalOptions="Center" 
                                HorizontalOptions="StartAndExpand"
                                FontSize="Title"
                                FontAttributes="Bold"/>
-                        <Label IsVisible="{Binding IsDownloadedVisible}"/>
-                    </HorizontalStackLayout>
-                    <VerticalStackLayout.GestureRecognizers>
-                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding DownloadedVisibleCommand}"/>
-                    </VerticalStackLayout.GestureRecognizers>
-                </VerticalStackLayout>
-                <ListView IsVisible="{Binding IsDownloadedVisible}"
+                            <Label IsVisible="{Binding IsDownloadedVisible}"/>
+                        </HorizontalStackLayout>
+                        <VerticalStackLayout.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding DownloadedVisibleCommand}"/>
+                        </VerticalStackLayout.GestureRecognizers>
+                    </VerticalStackLayout>
+                    <ListView IsVisible="{Binding IsDownloadedVisible}"
                           ItemsSource="{Binding DownloadedTracks}"
                           SelectionMode="None"
                           Margin="10">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                <Grid>
-                                    <HorizontalStackLayout Spacing="10">
-                                        <Image Source="{Binding ThumbSource}"
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Grid>
+                                        <HorizontalStackLayout Spacing="10">
+                                            <Image Source="{Binding ThumbSource}"
                                            WidthRequest="50"
                                            HeightRequest="50"/>
-                                        <VerticalStackLayout VerticalOptions="CenterAndExpand">
-                                            <Label Text="{Binding title}"
+                                            <VerticalStackLayout VerticalOptions="CenterAndExpand">
+                                                <Label Text="{Binding title}"
                                                LineBreakMode="TailTruncation"
                                                MaximumWidthRequest="300"/>
-                                            <Label Text="{Binding author}"
+                                                <Label Text="{Binding author}"
                                                TextColor="{StaticResource Gray400}"/>
-                                        </VerticalStackLayout>
-                                    </HorizontalStackLayout>
-                                    <Grid.GestureRecognizers>
-                                        <TapGestureRecognizer NumberOfTapsRequired="1"
+                                            </VerticalStackLayout>
+                                        </HorizontalStackLayout>
+                                        <Grid.GestureRecognizers>
+                                            <TapGestureRecognizer NumberOfTapsRequired="1"
                                                       Command="{Binding Source={RelativeSource AncestorType={x:Type vm:LibraryViewModel}}, Path=PlaySelectedCommand}"
                                                       CommandParameter="{Binding .}"/>
-                                    </Grid.GestureRecognizers>
-                                </Grid>
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </VerticalStackLayout>
-            <VerticalStackLayout>
-                <Grid Padding="5">
-                    <HorizontalStackLayout Spacing="10"
+                                        </Grid.GestureRecognizers>
+                                    </Grid>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </VerticalStackLayout>
+                <VerticalStackLayout>
+                    <Grid Padding="5">
+                        <HorizontalStackLayout Spacing="10"
                                            VerticalOptions="CenterAndExpand">
-                        <Image Source="{AppThemeBinding Light=playlist_2_line_black.png, Dark=playlist_2_line.png}"
+                            <Image Source="{AppThemeBinding Light=playlist_2_line_black.png, Dark=playlist_2_line.png}"
                                WidthRequest="36"
                                HeightRequest="36"/>
-                        <Label Text="Playlists"
+                            <Label Text="Playlists"
                                FontSize="Title"
                                FontAttributes="Bold"
                                VerticalOptions="CenterAndExpand"
                                HorizontalOptions="StartAndExpand"/>
-                        <Label IsVisible="{Binding IsPlaylistsVisible}"/>
-                    </HorizontalStackLayout>
-
-                    <ImageButton Source="{AppThemeBinding Light=add_line_black.png, Dark=add_line.png}"
+                            <Label IsVisible="{Binding IsPlaylistsVisible}"/>
+                        </HorizontalStackLayout>
+                        <ImageButton Source="{AppThemeBinding Light=add_line_black.png, Dark=add_line.png}"
                                  WidthRequest="36"
                                  HeightRequest="36"
                                  Command="{Binding AddPlaylistCommand}"
                                  HorizontalOptions="EndAndExpand"/>
-                    <Grid.GestureRecognizers>
-                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding PlaylistsVisibleCommand}"/>
-                    </Grid.GestureRecognizers>
-                </Grid>
-                <ListView ItemsSource="{Binding Playlists}"
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding PlaylistsVisibleCommand}"/>
+                        </Grid.GestureRecognizers>
+                    </Grid>
+                    <ListView ItemsSource="{Binding Playlists}"
                           SelectionMode="None"
                           Margin="10"
-                          IsVisible="{Binding IsPlaylistsVisible, Mode=TwoWay}">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                <Grid>
-                                    <HorizontalStackLayout Spacing="10"
+                          IsVisible="{Binding IsPlaylistsVisible, Mode=TwoWay}"
+                              HasUnevenRows="True">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Grid Padding="5">
+                                        <HorizontalStackLayout Spacing="10"
+                                                               
                                                            VerticalOptions="CenterAndExpand">
-                                        <Image Source="{AppThemeBinding Light=rhythm_line_black.jpg, Dark=rhythm_line.jpg}"
+                                            <Image Source="{Binding IconPath}"
                                                WidthRequest="50"
                                                HeightRequest="50"/>
-                                        <VerticalStackLayout>
-                                            <Label Text="Playlist Name"/>
-                                        </VerticalStackLayout>
-                                    </HorizontalStackLayout>
-                                    <Grid.GestureRecognizers>
-                                        
-                                    </Grid.GestureRecognizers>
-                                </Grid>
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                                            <VerticalStackLayout VerticalOptions="CenterAndExpand">
+                                                <Label Text="{Binding Name}"
+                                                       FontSize="Title"
+                                                       FontAttributes="Bold"/>
+                                            </VerticalStackLayout>
+                                        </HorizontalStackLayout>
+                                        <Grid.GestureRecognizers>
+                                            <TapGestureRecognizer NumberOfTapsRequired="1"
+                                                                  Command="{Binding Source={RelativeSource AncestorType={x:Type vm:LibraryViewModel}}, Path=OpenPlaylistCommand}"
+                                                                  CommandParameter="{Binding .}"/>
+                                        </Grid.GestureRecognizers>
+                                    </Grid>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </VerticalStackLayout>
             </VerticalStackLayout>
-        </VerticalStackLayout>
-    </ScrollView>
+        </ScrollView>
+    </Grid>
 </ContentPage>

@@ -18,6 +18,10 @@ public class MainActivity : MauiAppCompatActivity
         {
             Shell.Current.GoToAsync("//HomePage");
         }
+        else if (Shell.Current.CurrentPage is PlaylistPage)
+        {
+            Shell.Current.GoToAsync("//LibraryPage");
+        }
         else
         {
             base.OnBackPressed();

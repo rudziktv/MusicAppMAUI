@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:MauiApp1.ViewModels"
+             xmlns:model="clr-namespace:MauiApp1.Model"
+             x:Class="MauiApp1.Views.PlaylistPage"
+             Title="PlaylistPage"
+             BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource bg00dp}}"
+             x:DataType="vm:PlaylistViewModel">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource bg01dp}}"
+              Padding="5">
+            <ImageButton Source="{AppThemeBinding Light=arrow_left_s_line_black.png, Dark=arrow_left_s_line.png}"
+                         WidthRequest="36"
+                         HeightRequest="36"
+                         HorizontalOptions="StartAndExpand"
+                         VerticalOptions="CenterAndExpand"
+                         Command="{Binding GoBackCommand}"/>
+        </Grid>
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout>
+                <HorizontalStackLayout Padding="10"
+                                       Spacing="10">
+                    <ImageButton Source="{Binding PlaylistIconPath}"
+                                 WidthRequest="150"
+                                 HeightRequest="150"/>
+                    <Label Text="{Binding PlaylistName}"
+                           FontSize="Title"
+                           FontAttributes="Bold"/>
+                </HorizontalStackLayout>
+                <ListView ItemsSource="{Binding Tracks}"
+                          SelectionMode="None"
+                          Margin="10">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="model:TrackModel">
+                            <ViewCell>
+                                <Grid Padding="5">
+                                    <HorizontalStackLayout Spacing="10">
+                                        <Image Source="{Binding ThumbPath}"
+                                           WidthRequest="50"
+                                           HeightRequest="50"/>
+                                        <VerticalStackLayout VerticalOptions="CenterAndExpand">
+                                            <Label Text="{Binding TrackTitle}"
+                                               LineBreakMode="TailTruncation"
+                                               MaximumWidthRequest="250"/>
+                                            <Label Text="{Binding TrackAuthor}"
+                                               TextColor="{StaticResource Gray400}"/>
+                                        </VerticalStackLayout>
+                                    </HorizontalStackLayout>
+                                    <ImageButton Source="{Binding IconSource}"
+                                                 WidthRequest="36"
+                                                 HeightRequest="36"
+                                                 HorizontalOptions="EndAndExpand"
+                                                 VerticalOptions="CenterAndExpand"
+                                                 Command="{Binding Source={RelativeSource AncestorType={x:Type vm:PlaylistViewModel}}, Path=DownloadTrackCommand}"
+                                                 CommandParameter="{Binding .}"/>
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer NumberOfTapsRequired="1"
+                                                              Command="{Binding Source={RelativeSource AncestorType={x:Type vm:PlaylistViewModel}}, Path=PlaySelectedCommand}"
+                                                              CommandParameter="{Binding .}"/>
+                                    </Grid.GestureRecognizers>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

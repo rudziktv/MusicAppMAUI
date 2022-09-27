@@ -115,6 +115,8 @@ namespace MauiApp1.ViewModels
 		public Command GoBackCommand { get; set; }
 		public Command OpenPlayerContextCommand { get; set; }
 		public Command PlayPauseCommand { get; set; }
+		public Command NextCommand { get; set; }
+		public Command PreviousCommand { get; set; }
 		public Command SeekToCommand { get; set; }
 
 		public PlayerViewModel()
@@ -127,6 +129,16 @@ namespace MauiApp1.ViewModels
             });
 			PlayPauseCommand = new(PlayPause);
 			SeekToCommand = new(SeekTo);
+
+			NextCommand = new(() =>
+			{
+				GlobalData.GlobalPlayer.PlayNext();
+			});
+
+			PreviousCommand = new(() =>
+			{
+				GlobalData.GlobalPlayer.PlayPrevious();
+			});
 
             ThumbSource = GlobalData.LastThumbPath;
 
@@ -163,7 +175,7 @@ namespace MauiApp1.ViewModels
 
 		private void TimelineUpdate()
 		{
-            GlobalData.GlobalPlayer.Dispatcher.StartTimer(TimeSpan.FromMilliseconds(500), () => {
+            Shell.Current.Dispatcher.StartTimer(TimeSpan.FromMilliseconds(500), () => {
                 if (GlobalData.GlobalPlayer.IsPlaying)
                 {
 					TrackTitle = GlobalData.GlobalPlayer.CurrentTitle;

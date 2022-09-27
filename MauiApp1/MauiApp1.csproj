@@ -129,6 +129,7 @@
 	  <None Remove="Resources\Images\icon.png" />
 	  <None Remove="Resources\Images\icon_big.png" />
 	  <None Remove="Resources\Images\icon_without_text.png" />
+	  <None Remove="Resources\Images\new_playlist.png" />
 	  <None Remove="Resources\Images\order_play_line.png" />
 	  <None Remove="Resources\Images\order_play_line_black.png" />
 	  <None Remove="Resources\Images\pause_line.png" />
@@ -205,6 +206,9 @@
 	  <MauiXaml Update="Views\PlayerPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\PlaylistPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\PlaylistYoutubeView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -214,6 +218,10 @@
 	  <MauiXaml Update="Views\SpinnerPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Interfaces\" />
 	</ItemGroup>
 
 	<ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadDebuggerTimeoutExceptionMauiApp1HideInfoBar="True" XamarinHotReloadGenericExceptionInfoBarMauiApp1HideInfoBar="True" XamarinHotReloadUnhandledDeviceExceptionMauiApp1HideInfoBar="True" /></VisualStudio></ProjectExtensions>

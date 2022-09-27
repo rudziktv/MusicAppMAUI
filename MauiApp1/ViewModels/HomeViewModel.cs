@@ -87,7 +87,7 @@ namespace MauiApp1.ViewModels
 
         private void PlayerUpdate()
         {
-            GlobalData.GlobalPlayer.Dispatcher.StartTimer(TimeSpan.FromMilliseconds(500), () =>
+            Shell.Current.Dispatcher.StartTimer(TimeSpan.FromMilliseconds(500), () =>
             {
                 TrackTitle = GlobalData.GlobalPlayer.CurrentTitle;
                 TrackAuthor = GlobalData.GlobalPlayer.CurrentAuthor;

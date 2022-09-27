@@ -22,13 +22,28 @@ namespace MauiApp1.ViewModels
             CancelCommand = new(() => GlobalData.PlaylistPopup.Close());
         }
 
-        private void GetPlaylist()
+        private async void GetPlaylist()
         {
-            popup = new();
-            Shell.Current.CurrentPage.ShowPopup(popup);
-            
-            //popup.Close();
-            
+            if (!string.IsNullOrEmpty(HrefToPlaylist))
+            {
+                popup = new();
+                Shell.Current.CurrentPage.ShowPopup(popup);
+                var local_db = new LocalDatabaseService();
+                var playlist = await local_db.AddPlaylistAndVideosFromYouTube(HrefToPlaylist);
+                if (playlist != null)
+                {
+                    popup.Close();
+                    await Shell.Current.DisplayAlert("Adding playlist", "Playlist has been added to local database.", "Ok");
+                    await Shell.Current.GoToAsync(nameof(PlaylistPage));
+                    new PlaylistViewModel(playlist);
+                    GlobalData.PlaylistPopup.Close();
+                }
+                else
+                {
+                    popup.Close();
+                    await Shell.Current.DisplayAlert("Error", "Playlist has been not added. Download and adding ended with error.\nCheck your network connection and make sure your playlist is NOT PRIVATE.", "Ok");
+                }
+            }
         }
     }
 }

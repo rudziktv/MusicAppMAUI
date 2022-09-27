@@ -1,5 +1,6 @@
 ﻿using Android.Media;
 using Java.Interop;
+using MauiApp1.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,9 +27,10 @@ namespace MauiApp1.Listeners
             //throw new NotImplementedException();
         }
 
-        public async void OnCompletion(MediaPlayer mp)
+        public void OnCompletion(MediaPlayer mp)
         {
-            await Shell.Current.DisplayAlert("CHUJ", "CHUJ", "CHUJ");
+            //await Shell.Current.DisplayAlert("MediaSource", "Source for media player ended.", "Ok");
+            GlobalData.GlobalPlayer.PlayNext();
         }
 
         public void SetJniIdentityHashCode(int value)

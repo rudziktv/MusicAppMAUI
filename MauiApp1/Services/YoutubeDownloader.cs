@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using VideoLibrary;
@@ -11,12 +12,23 @@ namespace MauiApp1.Services
     {
         public static Task DownloadVideo(string url, string filePath)
         {
-            return Task.Run(() =>
+            return Task.Run(async () =>
             {
-                var source = filePath;
-                var youtube = YouTube.Default;
-                var vid = youtube.GetVideo(url);
-                File.WriteAllBytes(source, vid.GetBytes());
+                try
+                {
+                    var source = filePath;
+                    var youtube = YouTube.Default;
+                    var vid = youtube.GetVideo(url);
+                    File.WriteAllBytes(source, vid.GetBytes());
+                }
+                catch (VideoLibrary.Exceptions.UnavailableStreamException)
+                {
+                    await Shell.Current.DisplayAlert("Error", "Track is not avaible, skipping...", "Ok");
+                }
+                catch (TargetInvocationException)
+                {
+                    await Shell.Current.DisplayAlert("Error", "Track is not avaible, skipping...", "Ok");
+                }
             });
         }
 

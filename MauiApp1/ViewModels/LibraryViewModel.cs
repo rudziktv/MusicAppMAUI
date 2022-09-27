@@ -11,6 +11,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CommunityToolkit.Maui.Core.Extensions;
 
 namespace MauiApp1.ViewModels
 {
@@ -24,6 +25,8 @@ namespace MauiApp1.ViewModels
         public Command RefreshCommand { get; set; }
         public Command AddPlaylistCommand { get; set; }
         public Command<DownloadedTrack> PlaySelectedCommand { get; set; }
+        public Command<Playlist> OpenPlaylistCommand { get; set; }
+        public Command<Playlist> PlayPlaylistCommand { get; set; }
 
         private bool _isDownloadedVisible;
 
@@ -49,18 +52,19 @@ namespace MauiApp1.ViewModels
             }
         }
 
-
-
         public LibraryViewModel()
         {
             //IsDownloadedVisible = false;
             //IsPlaylistsVisible = false;
+            var popup = new SpinnerPopup();
+            Shell.Current.ShowPopup(popup);
+
             DownloadedVisibleCommand = new(() => IsDownloadedVisible = !IsDownloadedVisible);
             PlaylistsVisibleCommand = new(() => IsPlaylistsVisible = !IsPlaylistsVisible);
 
             FillDownloadedTracks();
             GetPlaylists();
-            RefreshCommand = new(FillDownloadedTracks);
+            RefreshCommand = new(Refresh);
             PlaySelectedCommand = new((DownloadedTrack track) => {
                 GlobalData.GlobalPlayer.ChangeSource(track.local_path, track.title, track.author, track.youtube_id);
             });
@@ -71,43 +75,45 @@ namespace MauiApp1.ViewModels
                 Shell.Current.CurrentPage.ShowPopup(GlobalData.PlaylistPopup);
             });
 
-            Playlists ??= new();
+            OpenPlaylistCommand = new(async (playlist) =>
+            {
+                await Shell.Current.GoToAsync(nameof(PlaylistPage));
+                new PlaylistViewModel(playlist);
+            });
 
-            Playlists.Add(new());
-            Playlists.Add(new());
-            Playlists.Add(new());
+            //PlayPlaylistCommand = new(async(playlist) =>
+            //{
+            //var local_db = new LocalDatabaseService();
+            //var a = await local_db.GetTracksFromPlaylist(playlist.ID);
+            //GlobalData.GlobalPlayer.PlayPlaylist(a.ToList());
+            //});
+            popup.Close();
+        }
+
+        private void Refresh()
+        {
+            FillDownloadedTracks();
+            GetPlaylists();
         }
 
         private async void FillDownloadedTracks()
         {
-            var popup = new SpinnerPopup();
-            Shell.Current.ShowPopup(popup);
             DownloadedTracks ??= new();
-
             DownloadedTracks.Clear();
             LocalDatabaseService local_db = new();
             var a = await local_db.GetDownloadedTracks();
-
-
             foreach (var item in a)
             {
                 DownloadedTracks.Add(new DownloadedTrack(item));
             }
-            popup.Close();
         }
 
         private void GetPlaylists()
         {
             Playlists ??= new();
-            //Playlists.Clear();
-
-            //LocalDatabaseService local_db = new();
-            //var a = local_db.GetAllPlaylists();
-
-            //foreach (var item in a)
-            //{
-                //Playlists.Add(item);
-            //}
+            var local_db = new LocalDatabaseService();
+            Playlists = local_db.GetAllPlaylists().ToObservableCollection();
+            OnPropertyChanged(nameof(Playlists));
         }
     }
 }

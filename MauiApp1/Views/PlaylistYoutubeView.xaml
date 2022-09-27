@@ -7,7 +7,8 @@
         <vm:PlaylistYoutubeViewModel/>
     </ContentView.BindingContext>
     <VerticalStackLayout Spacing="5">
-        <Entry Placeholder="Enter playlist link from YouTube"/>
+        <Entry Placeholder="Enter playlist link from YouTube"
+               Text="{Binding HrefToPlaylist}"/>
         <Border Padding="10"
                 Stroke="#ce6779">
             <Border.StrokeShape>

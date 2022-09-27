@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace MauiApp1.LocalDatabase
 {
     [Table("track")]
-    internal class Track : TableParent
+    internal class Track
     {
         [PrimaryKey, AutoIncrement]
         [Column("id")]
