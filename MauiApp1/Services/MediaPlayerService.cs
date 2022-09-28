@@ -1,8 +1,12 @@
-﻿using Android.Content;
+﻿using Android.App;
+using Android.Content;
 using Android.OS;
+using Android.Runtime;
+using Android.Service.Media;
 using Android.Support.V4.Media.Session;
 using Android.Text;
 using AndroidX.Media;
+using MauiApp1.Listeners;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +16,7 @@ using static Android.Media.Browse.MediaBrowser;
 
 namespace MauiApp1.Services
 {
-    /*
+    [IntentFilter(new string[] {MediaSessionService})]
     class MediaPlayerService : MediaBrowserServiceCompat
     {
         private const string MY_MEDIA_ROOT_ID = "media_root_id";
@@ -21,11 +25,33 @@ namespace MauiApp1.Services
         private MediaSessionCompat mediaSession;
         private PlaybackStateCompat.Builder stateBuilder;
 
+        public override void OnCreate()
+        {
+            base.OnCreate();
+
+            mediaSession = new MediaSessionCompat(MauiProgram.context, "media_session_compat_mmino");
+
+            // Enable callbacks from MediaButtons and TransportControls
+            mediaSession.SetFlags(
+                  MediaSessionCompat.FlagHandlesMediaButtons |
+                  MediaSessionCompat.FlagHandlesTransportControls);
+
+            // Set an initial PlaybackState with ACTION_PLAY, so media buttons can start the player
+            stateBuilder = new PlaybackStateCompat.Builder();
+            stateBuilder.SetActions(PlaybackStateCompat.ActionPlay | PlaybackStateCompat.ActionPlayPause);
+            mediaSession.SetPlaybackState(stateBuilder.Build());
+
+            // MySessionCallback() has methods that handle callbacks from a media controller
+            mediaSession.SetCallback(new MySessionCallback());
+
+            // Set the session's token so that client activities can communicate with it.
+            SessionToken = mediaSession.SessionToken;
+        }
         public override BrowserRoot OnGetRoot(string clientPackageName, int clientUid, Bundle rootHints)
         {
             // (Optional) Control the level of access for the specified package name.
             // You'll need to write your own logic to do this.
-            if (allowBrowsing(clientPackageName, clientUid))
+            if (AllowBrowsing(clientPackageName, clientUid))
             {
                 // Returns a root ID that clients can use with onLoadChildren() to retrieve
                 // the content hierarchy.
@@ -50,7 +76,7 @@ namespace MauiApp1.Services
 
             // Assume for example that the music catalog is already loaded/cached.
 
-            List<MediaItem> mediaItems = new();
+            JavaList<MediaItem> mediaItems = new();
 
             // Check if this is the root menu:
             if (MY_MEDIA_ROOT_ID.Equals(parentId))
@@ -66,28 +92,9 @@ namespace MauiApp1.Services
             result.SendResult(mediaItems);
         }
 
-        public override void OnCreate()
+        private bool AllowBrowsing(string clientPackageName, int clientUid)
         {
-            base.OnCreate();
-
-            mediaSession = new MediaSessionCompat(MauiProgram.context, LOG_TAG);
-
-            // Enable callbacks from MediaButtons and TransportControls
-            mediaSession.SetFlags(
-                  MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS |
-                  MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS);
-
-            // Set an initial PlaybackState with ACTION_PLAY, so media buttons can start the player
-            stateBuilder = new PlaybackStateCompat.Builder();
-            stateBuilder.SetActions(PlaybackStateCompat.ACTION_PLAY, PlaybackStateCompat.ACTION_PLAY_PAUSE);
-            mediaSession.SetPlaybackState(stateBuilder.Build());
-
-            // MySessionCallback() has methods that handle callbacks from a media controller
-            mediaSession.SetCallback(new MySessionCallback());
-
-            // Set the session's token so that client activities can communicate with it.
-            setSessionToken(mediaSession.GetSessionToken());
+            throw new NotImplementedException();
         }
     }
-    */
 }
