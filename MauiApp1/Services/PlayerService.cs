@@ -21,6 +21,9 @@ using static Android.Icu.Text.CaseMap;
 using YoutubeExplode.Common;
 using MauiApp1.Views;
 using CommunityToolkit.Maui.Views;
+using AndroidX.Core.App;
+using AndroidX.Core.Graphics.Drawable;
+using static AndroidX.Media.App.NotificationCompat;
 
 namespace MauiApp1.Services
 {
@@ -147,6 +150,14 @@ namespace MauiApp1.Services
             }
         }
 
+        public void Pause()
+        {
+            if (player.IsPlaying)
+            {
+                player.Pause();
+            }
+        }
+
         public void SeekTo(float value)
         {
             if (player.IsPlaying)
@@ -181,6 +192,9 @@ namespace MauiApp1.Services
                     ChannelId = "sample_notify"
                 }
             };
+
+
+
 
             LocalNotificationCenter.Current.Show(request);
             

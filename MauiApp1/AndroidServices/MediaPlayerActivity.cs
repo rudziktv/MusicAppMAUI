@@ -1,11 +1,15 @@
 ﻿using Android.Content;
+using Android.Graphics.Drawables;
 using Android.Media;
 using Android.OS;
 using Android.OS.Strictmode;
 using Android.Support.V4.Media;
 using Android.Support.V4.Media.Session;
 using AndroidX.AppCompat.App;
+using AndroidX.Core.App;
+using AndroidX.Core.Graphics.Drawable;
 using AndroidX.Media;
+using AndroidX.Media.Session;
 using MauiApp1.Listeners;
 using MauiApp1.Services;
 using System;
@@ -14,6 +18,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Markup;
+using static AndroidX.Media.App.NotificationCompat;
 
 namespace MauiApp1.AndroidServices
 {
@@ -50,6 +55,10 @@ namespace MauiApp1.AndroidServices
                 MediaControllerCompat.GetMediaController(this).UnregisterCallback(controllerCallback);
             }
             mediaBrowser.Disconnect();
+
+            
         }
+
+        
     }
 }
